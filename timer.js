@@ -53,14 +53,17 @@ playButton.addEventListener('click', function () {
 })
 
 const showMovie = function () {
-  document.getElementById("movie_area").style.display = 'block';
+  document.getElementById("movie_area").style.display = 'block'
 }
 
 var started = false;
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING && !started) {
-    setTimeout(showUltraSoul, 66500);
-    started = true;
+    setTimeout(showUltraSoul, 67500);
+    started = true
+  } else if (event.data == YT.PlayerState.ENDED) {
+    document.getElementById("movie_area").style.display = 'none'
+    started = false
   }
 }
 
