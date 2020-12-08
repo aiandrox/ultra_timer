@@ -1,7 +1,7 @@
 'use strict'
 
 // const haiTime = 67120
-const haiTime = 67400
+const haiTime = 67000
 const ultraId = 'Ujb-ZeX7Mo8'
 
 const formatDate = (date) => {
@@ -15,22 +15,27 @@ const formatDate = (date) => {
 }
 
 window.onload = () => {
-  showTime()
-  setInterval('showTime()', 500)
+  showTime(displayTime)
+  setInterval('countUp()', 1000)
 }
-const justTime = 1609426800000 // 0時0分
+const justTime = new Date('2021-1-1 0:00:00').getTime() //1609426800000 // 0時0分
 const subtraction = 180000 // 3分
-const funmae = justTime - subtraction
+const funmae = new Date(justTime - subtraction)
+let displayTime = funmae
 
 const shouldStartTime = justTime - haiTime
 
-function showTime() {
-  document.getElementById("timer").innerHTML = formatDate(displayTime())
+function showTime(time) {
+  document.getElementById("timer").innerHTML = formatDate(time)
 }
 
-function displayTime() {
-  let now = new Date().getTime()
-  return new Date(funmae + (now % subtraction))
+function countUp() {
+  if (displayTime >= new Date('2021-1-1 0:00:30')) {
+    displayTime = funmae
+  } else {
+    displayTime = new Date(displayTime.getTime() + 1000)
+  }
+  showTime(displayTime)
 }
 
 // IFrame Player API の読み込み
@@ -84,7 +89,7 @@ function onPlayerStateChange(event) {
 }
 
 function startCount() {
-  setStartTime(displayTime())
+  setStartTime(displayTime)
   setTimeout(showUltraSoul, haiTime)
   setTimeout(resetTime, sa)
   started = true
@@ -98,66 +103,9 @@ function setStartTime(time) {
 }
 
 function resetTime() {
-  
+  displayTime = funmae
 }
 
 function showUltraSoul() {
   alert("ULTRA SOUL")
 }
-
-// class Counter {
-//   constructor() {
-//     this.
-//   }
-
-//   start(displayTime) {
-//     const sinnen = new Date(1609426800000)
-//     this.lastDisplayTime = sinnen - displayTime // あと何秒？
-//   }
-
-//   reset() {
-//     this.lastDisplayTime = sinnen - now
-//   }
-// }
-
-
-// class Counter {
-//   constructor(time) {
-//     let now = new Date()
-//     this.time = time
-//     this.joyaTime = new Date(1609426500000 + (now.getTime() % 300000))  // 5分
-//     this.showTime = 
-//   }
-
-//   text(now) {
-//     const diff = Math.abs(difference(now))
-//     if (diff < 100) {
-//       return "いい感じ"
-//     } else {
-//       return "ずれてる"
-//     }
-//   }
-
-//   difference(now) {
-//     return now - shouldStartTime()
-//   }
-
-//   shouldStartTime() {
-//     return 5分 - this.time
-//   }
-
-// // timeに対して基本は5分おき
-// // リセットすると55からになる
-// // タイマーは「現在時刻」を管理する。
-// // タイマーは内部で「この時間」を保持する。
-// // start時点で「この時間」と比較する。start時点でfinish時のフックは起動させる。
-
-// }
-  // counter = (difference) => {
-  //   const stop_time = joyaTime
-  //   document.getElementById("result").innerHTML = joyaTime.toLocaleTimeString() + "でした。"
-  // }
-
-// const play_time =
-// setTimeout(処理内容, 実行タイミング)
-
