@@ -31,11 +31,15 @@ function showTime(time) {
 
 function countUp() {
   if (displayTime >= new Date('2021-1-1 0:00:30')) {
-    displayTime = funmae
+    resetDisplayTime()
   } else {
     displayTime = new Date(displayTime.getTime() + 1000)
   }
   showTime(displayTime)
+}
+
+function resetDisplayTime() {
+  displayTime = funmae
 }
 
 // IFrame Player API の読み込み
