@@ -96,7 +96,8 @@ function onPlayerStateChange(event) {
 function startCount() {
   setStartTime(displayTime)
   setTimeout(showUltraSoul, haiTime)
-  setTimeout(resetTime, sa)
+  setTimeout(resetDisplayTime, haiTime + sa + 10000)
+  console.log(displaySa())
   started = true
 }
 
@@ -107,12 +108,15 @@ function setStartTime(time) {
   sa = startTime - shouldStartTime // 正のとき遅れている
 }
 
-function resetTime() {
-  displayTime = funmae
+function displaySa() {
+  const diff = Math.abs(sa) / 1000 // 絶対値
+  const m = parseInt(diff/60)%60;
+  const s = parseInt(diff)%60;
+  return `${m}分${s}秒`
 }
 
 function showUltraSoul() {
-  alert("ULTRA SOUL")
+  alert(`ULTRA SOULとの差異は${displaySa()}です`)
 }
 
 
