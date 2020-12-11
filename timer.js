@@ -69,6 +69,7 @@ function onYouTubeIframeAPIReady() {
 
 const playButton = document.getElementById('play_button')
 const MovieArea = document.getElementById("movie_area")
+
 playButton.addEventListener('click', function () {
   showMovie()
   player.playVideo() // onPlayerStateChangeに飛ぶ
@@ -113,3 +114,5 @@ function resetTime() {
 function showUltraSoul() {
   alert("ULTRA SOUL")
 }
+
+
