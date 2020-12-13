@@ -4,6 +4,10 @@
 const haiTime = 66900
 const ultraId = 'Ujb-ZeX7Mo8'
 
+window.onload = () => {
+  showTime(displayTime)
+}
+
 const formatDate = (date) => {
   const y = date.getFullYear()
   const m = date.getMonth() + 1
@@ -14,23 +18,18 @@ const formatDate = (date) => {
   return `${y}年${m}月${d}日 ${h}時${min}分${s}秒`
 }
 
-window.onload = () => {
-  showTime(displayTime)
-  setInterval('countUp()', 1000)
-}
+// タイマー
+const timer = setInterval('countUp()', 1000)
 const justTime = new Date('2021-1-1 0:00:00').getTime() //1609426800000 // 0時0分
-const subtraction = 180000 // 3分
+const subtraction = 80000 // 後で変える
 const funmae = new Date(justTime - subtraction)
 let displayTime = funmae
-
 const shouldStartTime = justTime - haiTime
 
-function showTime(time) {
-  document.getElementById("timer").innerHTML = formatDate(time)
-}
-
 function countUp() {
-  if (displayTime >= new Date('2021-1-1 0:00:30')) {
+  // スタートが遅かったときに、ウルトラソウルを待たずにループするので
+  const resetTime = new Date(justTime + sa + 10000)
+  if (displayTime >= resetTime) {
     resetDisplayTime()
   } else {
     displayTime = new Date(displayTime.getTime() + 1000)
@@ -38,8 +37,16 @@ function countUp() {
   showTime(displayTime)
 }
 
+function showTime(time) {
+  document.getElementById("timer").innerHTML = formatDate(time)
+}
+
 function resetDisplayTime() {
   displayTime = funmae
+}
+
+function stopTimer(){
+  clearInterval(timer);
 }
 
 // IFrame Player API の読み込み
@@ -67,15 +74,15 @@ function onYouTubeIframeAPIReady() {
   })
 }
 
+// イベント系
 const playButton = document.getElementById('play_button')
-const MovieArea = document.getElementById("movie_area")
+const haiArea = document.getElementById("hai_area")
 
 playButton.addEventListener('click', function () {
-  showMovie()
   player.playVideo() // onPlayerStateChangeに飛ぶ
 })
 
-const showMovie = function () {
+function showMovie() {
   document.getElementById("movie_area").style.display = 'block'
   playButton.style.display = 'none'
 }
@@ -83,6 +90,7 @@ const showMovie = function () {
 var started = false
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING && !started) {
+    showMovie()
     startCount()
   } else if (event.data == YT.PlayerState.ENDED) {
     document.getElementById("movie_area").style.display = 'none'
@@ -96,7 +104,6 @@ function onPlayerStateChange(event) {
 function startCount() {
   setStartTime(displayTime)
   setTimeout(showUltraSoul, haiTime)
-  setTimeout(resetDisplayTime, haiTime + sa + 10000)
   console.log(displaySa())
   started = true
 }
@@ -109,14 +116,17 @@ function setStartTime(time) {
 }
 
 function displaySa() {
-  const diff = Math.abs(sa) / 1000 // 絶対値
-  const m = parseInt(diff/60)%60;
-  const s = parseInt(diff)%60;
-  return `${m}分${s}秒`
+  const diff = Math.abs(sa) / 10 // 絶対値
+  const m = parseInt(diff/100/60)%60;// /100はミリ秒を秒にしている
+  const s = parseInt(diff/100)%60;
+  const ms = parseInt(diff)%100;
+  const displayMs = ms.toString().padStart(2, '0');
+  return `${m}分${s}秒${displayMs}`
 }
 
+// 表示系
 function showUltraSoul() {
-  alert(`ULTRA SOULとの差異は${displaySa()}です`)
+  setTimeout(stopTimer(), 3000)
+  haiArea.style.display = 'block'
+  haiArea.insertAdjacentHTML('beforeend', `<div>ズレは${displaySa()}です</div>`);
 }
-
-
