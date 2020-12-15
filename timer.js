@@ -115,11 +115,14 @@ function setStartTime(time) {
   sa = startTime - shouldStartTime // 正のとき遅れている
 }
 
+function diff() {
+  return Math.abs(sa) / 10
+}
+
 function displaySa() {
-  const diff = Math.abs(sa) / 10 // 絶対値
-  const m = parseInt(diff/100/60)%60;// /100はミリ秒を秒にしている
-  const s = parseInt(diff/100)%60;
-  const ms = parseInt(diff)%100;
+  const m = parseInt(diff()/100/60)%60;// /100はミリ秒を秒にしている
+  const s = parseInt(diff()/100)%60;
+  const ms = parseInt(diff())%100;
   const displayMs = ms.toString().padStart(2, '0');
   return `${m}分${s}秒${displayMs}`
 }
@@ -130,3 +133,16 @@ function showUltraSoul() {
   haiArea.style.display = 'block'
   haiArea.insertAdjacentHTML('beforeend', `<div>ズレは${displaySa()}です</div>`);
 }
+
+function point() {
+  if (diff() > 1000) {
+    return 0
+  } else if (diff() > 500) {
+    return 50 - diff()/50
+  } else if (diff() > 100) {
+    return 90 - diff()/40
+  } else {
+    return 100 - diff()/10
+  }
+}
+

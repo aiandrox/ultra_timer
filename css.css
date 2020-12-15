@@ -1,0 +1,25 @@
+body {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 30px;
+}
+
+#timer {
+  font-size: 2rem;
+}
+
+#play_button {
+  color: #fff;
+  background-color: #eb6100;
+  border-bottom: 5px solid #b84c00;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#play_button:hover {
+  margin-top: 3px;
+  color: #fff;
+  background: #f56500;
+  border-bottom: 2px solid #b84c00;
+}
