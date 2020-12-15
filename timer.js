@@ -10,12 +10,16 @@ window.onload = () => {
 
 const formatDate = (date) => {
   const y = date.getFullYear()
-  const m = date.getMonth() + 1
-  const d = date.getDate()
-  const h = date.getHours()
-  const min = date.getMinutes()
-  const s = date.getSeconds()
+  const m = zeroPadding(date.getMonth() + 1);
+  const h = zeroPadding(date.getHours())
+  const d = zeroPadding(date.getDate())
+  const min = zeroPadding(date.getMinutes())
+  const s = zeroPadding(date.getSeconds())
   return `${y}年${m}月${d}日 ${h}時${min}分${s}秒`
+}
+
+function zeroPadding(num) {
+  return num.toString().padStart(2, '0');
 }
 
 // タイマー
@@ -123,7 +127,7 @@ function displaySa() {
   const m = parseInt(diff()/100/60)%60;// /100はミリ秒を秒にしている
   const s = parseInt(diff()/100)%60;
   const ms = parseInt(diff())%100;
-  const displayMs = ms.toString().padStart(2, '0');
+  const displayMs = zeroPadding(ms);
   return `${m}分${s}秒${displayMs}`
 }
 
