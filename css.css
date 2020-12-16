@@ -5,14 +5,19 @@ body {
   font-family: "Sawarabi Mincho", serif;
 }
 
+h1 {
+  margin-bottom: 2rem;
+}
+
 div {
   margin-bottom: 2rem;
 }
 
 .ultra {
   color: #ffeb75;
-  font-size: 1.2rem;
+  font-size: 1.2em;
   font-weight: bold;
+  padding: 0 4px;
 }
 
 #main {
@@ -23,7 +28,9 @@ div {
 }
 
 #timer {
-  font-size: 2rem;
+  font-size: 2.4rem;
+  color: #000;
+  text-shadow: 0 0 0.3em #fff, 0 0 0.5em #fff, 0 0 0.5em #fff;
 }
 
 #play_button {
@@ -77,5 +84,11 @@ div {
   100% {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .br-sp {
+    display: none;
   }
 }

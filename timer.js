@@ -15,7 +15,7 @@ const formatDate = (date) => {
   const d = zeroPadding(date.getDate())
   const min = zeroPadding(date.getMinutes())
   const s = zeroPadding(date.getSeconds())
-  return `${y}年${m}月${d}日 ${h}時${min}分${s}秒`
+  return `${y}年${m}月${d}日 <br class="br-sp">${h}時${min}分${s}秒`
 }
 
 function zeroPadding(num) {
