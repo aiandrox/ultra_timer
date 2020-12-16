@@ -1,7 +1,7 @@
 'use strict'
 
 // const haiTime = 67120
-const haiTime = 66900
+const haiTime = 66700
 const ultraId = 'Ujb-ZeX7Mo8'
 
 window.onload = () => {

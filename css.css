@@ -1,7 +1,4 @@
 body {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
   padding-top: 3rem;
   color: #fff;
   background-color: #03506f;
@@ -9,7 +6,7 @@ body {
 }
 
 div {
-  padding-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .ultra {
@@ -19,6 +16,9 @@ div {
 }
 
 #main {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -40,6 +40,18 @@ div {
   font-family: "Sawarabi Mincho";
 }
 
+#hai_area {
+  position: absolute;
+  top: 30%;
+  z-index: 2;
+  width: 100%;
+  background-color: #fff;
+  color: #03506f;
+  font-size: 5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
 #play_button:hover {
   margin-top: 3px;
   color: #fff;
@@ -50,4 +62,18 @@ div {
   color: #ffeb75;
 }
 .ultra-2 {
+}
+
+.cut {
+  animation: SlideIn 1s;
+}
+@keyframes SlideIn {
+  0% {
+    opacity: 0; /*初期状態では透明に*/
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
