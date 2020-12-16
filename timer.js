@@ -156,7 +156,7 @@ function message() {
   if (diff() > 1000) {
     return '<div class="msg-3">魂を感じません</div>'
   } else if (diff() > 500) {
-    return '<div class="msg-3"></div>'
+    return '<div class="msg-3">ミニマムソウルですね</div>'
   } else if (diff() > 100) {
     return '<div class="msg-3">ほどほどソウルですね</div>'
   } else if (diff() > 10) {

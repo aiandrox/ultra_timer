@@ -47,9 +47,11 @@ div {
   width: 100%;
   background-color: #fff;
   color: #03506f;
+  text-align: center;
+}
+.hai {
   font-size: 5rem;
   font-weight: bold;
-  text-align: center;
 }
 
 #play_button:hover {
