@@ -2,10 +2,20 @@ body {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding-top: 30px;
+  padding-top: 3rem;
   color: #fff;
   background-color: #03506f;
-  font-family: "Sawarabi Mincho";
+  font-family: "Sawarabi Mincho", serif;
+}
+
+div {
+  padding-bottom: 2rem;
+}
+
+.ultra {
+  color: #ffeb75;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 #main {
@@ -34,4 +44,10 @@ body {
   margin-top: 3px;
   color: #fff;
   border-bottom: 2px solid #7c0021;
+}
+
+.ultra-1 {
+  color: #ffeb75;
+}
+.ultra-2 {
 }

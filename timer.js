@@ -79,6 +79,7 @@ function onYouTubeIframeAPIReady() {
 }
 
 // イベント系
+const descZone = document.getElementById('desc')
 const playButton = document.getElementById('play_button')
 const haiArea = document.getElementById("hai_area")
 
@@ -88,7 +89,7 @@ playButton.addEventListener('click', function () {
 
 function showMovie() {
   document.getElementById("movie_area").style.display = 'block'
-  playButton.style.display = 'none'
+  desc.style.display = 'none'
 }
 
 var started = false
@@ -98,7 +99,7 @@ function onPlayerStateChange(event) {
     startCount()
   } else if (event.data == YT.PlayerState.ENDED) {
     document.getElementById("movie_area").style.display = 'none'
-    playButton.style.display = 'block'
+    desc.style.display = 'block'
     started = false
   } else if (event.data == YT.PlayerState.PAUSED) {
     alert('止めたな！！')
@@ -109,6 +110,7 @@ function startCount() {
   setStartTime(displayTime)
   setTimeout(showUltraSoul, haiTime)
   console.log(displaySa())
+  console.log(point())
   started = true
 }
 
@@ -133,9 +135,9 @@ function displaySa() {
 
 // 表示系
 function showUltraSoul() {
-  setTimeout(stopTimer(), 3000)
+  stopTimer()
   haiArea.style.display = 'block'
-  haiArea.insertAdjacentHTML('beforeend', `<div>ズレは${displaySa()}です</div>`);
+  haiArea.insertAdjacentHTML('beforeend', `<div>ズレは${displaySa()}です。${point()}点</div>`);
 }
 
 function point() {
@@ -150,3 +152,16 @@ function point() {
   }
 }
 
+function message() {
+  if (diff() > 1000) {
+    return '<div class="msg-3">魂を感じません</div>'
+  } else if (diff() > 500) {
+    return '<div class="msg-3"></div>'
+  } else if (diff() > 100) {
+    return '<div class="msg-3">ほどほどソウルですね</div>'
+  } else if (diff() > 10) {
+    return '<div class="msg-2">スーパーソウルといったところかな</div>'
+  } else {
+    return '<div class="msg-1">お前が、お前こそがウルトラソウルだ</div>'
+  }
+}
