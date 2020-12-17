@@ -1,5 +1,6 @@
 'use strict'
 
+const url = 'https://aiandrox.github.io/ultra_timer/'
 // const haiTime = 67120
 const haiTime = 66700
 const ultraId = 'Ujb-ZeX7Mo8'
@@ -78,10 +79,11 @@ function onYouTubeIframeAPIReady() {
   })
 }
 
-// firebase
+// モーダル
+const dialog = document.querySelector('dialog');
+const modalHeader = document.getElementById("modal-header")
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// firebase
 var firebaseConfig = {
   apiKey: "AIzaSyCKNkqGrjSJ5afWXea1Ss669zVEjucjKRk",
   authDomain: "ultra-timer.firebaseapp.com",
@@ -146,10 +148,11 @@ function startCount() {
   console.log(displaySa())
   console.log(point())
   started = true
+  modalHeader.insertAdjacentHTML('beforeend', `あなたのソウルは<span>${point()}点</span>です。${displaySa()}のズレでした。`);
 }
 
 let startTime = null
-let sa = null
+let sa = 100000 // 初期値を0点ソウルにするため
 function setStartTime(time) {
   startTime = time
   sa = startTime - shouldStartTime // 正のとき遅れている
@@ -171,7 +174,6 @@ function displaySa() {
 function showUltraSoul() {
   stopTimer()
   haiArea.style.display = 'block'
-  haiArea.insertAdjacentHTML('beforeend', `<div>ズレは${displaySa()}です。${point()}点</div>`);
 }
 
 function point() {
@@ -198,4 +200,19 @@ function message() {
   } else {
     return '<div class="msg-1">お前が、お前こそがウルトラソウルだ</div>'
   }
+}
+
+// ツイート関連
+const tweetBtn = document.getElementById("tweet-btn")
+
+tweetBtn.addEventListener('click', function () {
+  window.open(tweetUrl(), '_blank');
+})
+
+function tweetMessage() {
+  return `${point()}点のソウルでした。`
+}
+
+function tweetUrl() {
+  return `https://twitter.com/intent/tweet?text=${tweetMessage()}&url=${url}&hashtags=ultra_timer,ｳﾙﾄﾗｿｳｯﾊｧｲを練習するアプリ`
 }

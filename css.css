@@ -36,8 +36,7 @@ div {
 #play_button {
   font-size: 1.8rem;
   padding: 0.2rem;
-  width: 100%;
-  max-width: 200px;
+  width: 200px;
   color: #fff;
   background-color: #c00033;
   border-bottom: 5px solid #7c0021;
@@ -45,6 +44,7 @@ div {
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   font-family: "Sawarabi Mincho";
+  cursor: pointer;
 }
 
 #hai_area {
@@ -73,6 +73,35 @@ div {
 .ultra-2 {
 }
 
+dialog {
+  padding: 1rem;
+  margin: 0.5rem;
+  border: 0;
+  border-radius: 6px;
+  box-shadow: 0 0 1em black;
+}
+
+dialog::backdrop {
+  /* 背景を半透明のブラックにする */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+dialog + .backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.btn {
+  width: 100%;
+  margin: 0.2rem;
+  padding: 0.2rem;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#register-btn {
+}
+#tweet-btn {
+}
+
 .cut {
   animation: SlideIn 1s;
 }
@@ -90,5 +119,11 @@ div {
 @media screen and (min-width: 768px) {
   .br-sp {
     display: none;
+  }
+  .btn {
+    width: 48%;
+  }
+  dialog {
+    margin: 0 auto;
   }
 }
