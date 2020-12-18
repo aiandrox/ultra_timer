@@ -155,6 +155,18 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
+// モーダル
+const rankBtn = document.getElementById('rank-btn')
+
+rankBtn.addEventListener('click', function() {
+  dialog.showModal();
+})
+dialog.addEventListener('click', (event) => {
+  if (event.target === dialog) {
+    dialog.close('cancelled');
+  }
+})
+
 // イベント系
 const descZone = document.getElementById('desc')
 const playButton = document.getElementById('play_button')
