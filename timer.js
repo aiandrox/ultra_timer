@@ -99,6 +99,47 @@ firebase.analytics();
 
 document.addEventListener('DOMContentLoaded', () => {
   const db = firebase.firestore();
+  const usersRef = db.collection("users").orderBy("point", "desc").limit(20)
+  const rankingArea = document.getElementById("ranking")
+
+  const users = []
+  usersRef.get().then(function(snapshot){
+    snapshot.forEach(function(doc) {
+      const user = doc.data()
+      users.push({name: user.name, point: user.point })
+    })
+    renderRanking()
+  }).catch(function(error) {
+    console.error(error);
+  });
+
+  function renderRanking() {
+    users.slice(0, 20).forEach(function(user, index) {
+      const html = `<p>${index+1}位　${user.name}　${user.point}点</p>`
+      rankingArea.insertAdjacentHTML('beforeend', html);
+    })
+  }
+
+  // 登録
+  const registerBtn = document.getElementById("register-btn")
+  const nameForm = document.getElementById("name")
+
+  registerBtn.addEventListener('click', function () {
+    const name = nameForm.value
+    if (name == "") {
+      return
+    }
+    db.collection("users").add({
+      name: name,
+      point: point(),
+      created_at: new Date()
+    })
+    .then(function (docRef) {
+      debugger
+      // docRef.data()で取得したい
+      console.log("Document written with ID: ", docRef.id);
+    })
+  })
 
   playButton.addEventListener('click', () => {
     db.collection("users").add({
