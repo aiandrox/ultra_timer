@@ -30,6 +30,8 @@ const subtraction = 80000 // 後で変える
 const funmae = new Date(justTime - subtraction)
 let displayTime = funmae
 const shouldStartTime = justTime - haiTime
+let startTime = null
+let sa = 100000 // 初期値を0点ソウルにするため
 
 function countUp() {
   // スタートが遅かったときに、ウルトラソウルを待たずにループするので
@@ -103,17 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const rankingArea = document.getElementById("ranking")
 
   const users = []
-  usersRef.get().then(function(snapshot){
-    snapshot.forEach(function(doc) {
+  usersRef.get().then(async function(snapshot){
+    await snapshot.forEach(function(doc) {
       const user = doc.data()
       users.push({name: user.name, point: user.point })
     })
     renderRanking()
-  }).catch(function(error) {
-    console.error(error);
-  });
+  })
 
   function renderRanking() {
+    rankingArea.textContent = null
     users.slice(0, 20).forEach(function(user, index) {
       const html = `<p>${index+1}位　${user.name}　${user.point}点</p>`
       rankingArea.insertAdjacentHTML('beforeend', html);
@@ -129,23 +130,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (name == "") {
       return
     }
-    db.collection("users").add({
+    db.collection('users').add({
       name: name,
       point: point(),
       created_at: new Date()
     })
-    .then(function (docRef) {
-      debugger
-      // docRef.data()で取得したい
-      console.log("Document written with ID: ", docRef.id);
-    })
+    addUsers({ name: name, point: point() })
+    nameForm.value = ""
   })
 
+  function addUsers(userData) {
+    users.push(userData)
+    users.sort(function(a,b) {
+      if(a.point > b.point) return -1;
+      if(a.point < b.point) return 1;
+      return 0;
+    });
+    renderRanking()
+  }
+
   playButton.addEventListener('click', () => {
-    db.collection("users").add({
-      name: "name",
-      point: 1815
-    })
     // .then(function (docRef) {
     //   console.log("Document written with ID: ", docRef.id);
     // })
@@ -204,8 +208,6 @@ function startCount() {
   modalHeader.insertAdjacentHTML('beforeend', `あなたのソウルは<span>${point()}点</span>です。${displaySa()}のズレでした。`);
 }
 
-let startTime = null
-let sa = 100000 // 初期値を0点ソウルにするため
 function setStartTime(time) {
   startTime = time
   sa = startTime - shouldStartTime // 正のとき遅れている
