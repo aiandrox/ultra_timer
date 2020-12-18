@@ -81,9 +81,20 @@ function onYouTubeIframeAPIReady() {
   })
 }
 
+// 表示非表示関数
+
+function hide(element) {
+  element.style.display = 'none'
+}
+
+function show(element) {
+  element.style.display = 'block'
+}
+
 // モーダル
 const dialog = document.querySelector('dialog');
 const modalHeader = document.getElementById("modal-header")
+const modalFooter = document.getElementById("modal-footer")
 
 // firebase
 var firebaseConfig = {
@@ -181,8 +192,8 @@ playButton.addEventListener('click', function () {
 })
 
 function showMovie() {
-  document.getElementById("movie_area").style.display = 'block'
-  desc.style.display = 'none'
+  show(document.getElementById("movie_area"))
+  hide(desc)
 }
 
 var started = false
@@ -191,8 +202,8 @@ function onPlayerStateChange(event) {
     showMovie()
     startCount()
   } else if (event.data == YT.PlayerState.ENDED) {
-    document.getElementById("movie_area").style.display = 'none'
-    desc.style.display = 'block'
+    hide(document.getElementById("movie_area"))
+    show(desc)
     started = false
   } else if (event.data == YT.PlayerState.PAUSED) {
     alert('止めたな！！')
@@ -228,7 +239,7 @@ function displaySa() {
 // 表示系
 function showUltraSoul() {
   stopTimer()
-  haiArea.style.display = 'block'
+  show(haiArea)
 }
 
 function point() {
