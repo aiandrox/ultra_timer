@@ -112,11 +112,6 @@ dialog.addEventListener('click', (event) => {
   }
 })
 
-function showMovie() {
-  show(document.getElementById("movie_area"))
-  hide(desc)
-}
-
 function showUltraSoul() {
   stopTimer()
   show(haiArea)
@@ -193,7 +188,8 @@ playButton.addEventListener('click', function () {
 var started = false
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING && !started) {
-    showMovie()
+    show(document.getElementById("movie_area"))
+    hide(desc)
     startCount()
   } else if (event.data == YT.PlayerState.ENDED) {
     hide(document.getElementById("movie_area"))
@@ -201,8 +197,16 @@ function onPlayerStateChange(event) {
     started = false
     hide(haiArea)
   } else if (event.data == YT.PlayerState.PAUSED) {
-    alert('止めたな！！')
+    alert()
   }
+}
+
+function alert() {
+  const alertElement = document.getElementById("alert")
+  alertElement.showModal()
+  setTimeout(function() {
+    document.location.reload()
+  }, 5000)
 }
 
 function startCount() {
