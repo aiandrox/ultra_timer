@@ -82,7 +82,6 @@ function onYouTubeIframeAPIReady() {
 }
 
 // 表示非表示関数
-
 function hide(element) {
   element.style.display = 'none'
 }
@@ -91,10 +90,38 @@ function show(element) {
   element.style.display = 'block'
 }
 
-// モーダル
 const dialog = document.querySelector('dialog');
 const modalHeader = document.getElementById("modal-header")
 const modalFooter = document.getElementById("modal-footer")
+const descZone = document.getElementById('desc')
+const playButton = document.getElementById('play_button')
+const haiArea = document.getElementById("hai_area")
+const rankBtn = document.getElementById('rank-btn')
+const rankingArea = document.getElementById("ranking-area")
+const rankingList = document.getElementById("rankingList")
+const tweetArea = document.getElementById("tweet-area")
+const registerBtn = document.getElementById("register-btn")
+const nameForm = document.getElementById("name")
+
+rankBtn.addEventListener('click', function() {
+  dialog.showModal();
+})
+dialog.addEventListener('click', (event) => {
+  if (event.target === dialog) {
+    dialog.close('cancelled');
+  }
+})
+
+function showMovie() {
+  show(document.getElementById("movie_area"))
+  hide(desc)
+}
+
+function showUltraSoul() {
+  stopTimer()
+  show(haiArea)
+  show(rankingArea)
+}
 
 // firebase
 var firebaseConfig = {
@@ -112,8 +139,7 @@ firebase.analytics();
 
 document.addEventListener('DOMContentLoaded', () => {
   const db = firebase.firestore();
-  const usersRef = db.collection("users").orderBy("point", "desc").limit(20)
-  const rankingArea = document.getElementById("ranking")
+  const usersRef = db.collection("users").orderBy("point", "desc")
 
   const users = []
   usersRef.get().then(async function(snapshot){
@@ -125,17 +151,14 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   function renderRanking() {
-    rankingArea.textContent = null
+    rankingList.textContent = null
     users.slice(0, 20).forEach(function(user, index) {
       const html = `<p>${index+1}位　${user.name}　${user.point}点</p>`
-      rankingArea.insertAdjacentHTML('beforeend', html);
+      rankingList.insertAdjacentHTML('beforeend', html);
     })
   }
 
   // 登録
-  const registerBtn = document.getElementById("register-btn")
-  const nameForm = document.getElementById("name")
-
   registerBtn.addEventListener('click', function () {
     const name = nameForm.value
     if (name == "") {
@@ -148,6 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     addUsers({ name: name, point: point() })
     nameForm.value = ""
+    hide(modalFooter)
+    show(tweetArea)
   })
 
   function addUsers(userData) {
@@ -159,42 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     renderRanking()
   }
-
-  playButton.addEventListener('click', () => {
-    // .then(function (docRef) {
-    //   console.log("Document written with ID: ", docRef.id);
-    // })
-    // .catch(function (error) {
-    //   console.error("Error adding document: ", error);
-    // });
-  })
 })
-
-// モーダル
-const rankBtn = document.getElementById('rank-btn')
-
-rankBtn.addEventListener('click', function() {
-  dialog.showModal();
-})
-dialog.addEventListener('click', (event) => {
-  if (event.target === dialog) {
-    dialog.close('cancelled');
-  }
-})
-
-// イベント系
-const descZone = document.getElementById('desc')
-const playButton = document.getElementById('play_button')
-const haiArea = document.getElementById("hai_area")
 
 playButton.addEventListener('click', function () {
   player.playVideo() // onPlayerStateChangeに飛ぶ
 })
-
-function showMovie() {
-  show(document.getElementById("movie_area"))
-  hide(desc)
-}
 
 var started = false
 function onPlayerStateChange(event) {
@@ -205,6 +199,7 @@ function onPlayerStateChange(event) {
     hide(document.getElementById("movie_area"))
     show(desc)
     started = false
+    hide(haiArea)
   } else if (event.data == YT.PlayerState.PAUSED) {
     alert('止めたな！！')
   }
@@ -234,12 +229,6 @@ function displaySa() {
   const ms = parseInt(diff())%100;
   const displayMs = zeroPadding(ms);
   return `${m}分${s}秒${displayMs}`
-}
-
-// 表示系
-function showUltraSoul() {
-  stopTimer()
-  show(haiArea)
 }
 
 function point() {
