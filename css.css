@@ -46,10 +46,34 @@ td {
   text-align: center;
 }
 
+.tosikosi {
+  color: #ffeb75;
+  animation: pulsate 1s ease-out; /* スピードなど */
+  animation-iteration-count: infinite;
+}
+.timer {
+  color: #000;
+}
 #timer {
   font-size: 2.4rem;
-  color: #000;
   text-shadow: 0 0 0.3em #fff, 0 0 0.5em #fff, 0 0 0.5em #fff;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    opacity: 1;
+  }
+  90% {
+    transform: scale(2, 2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2, 2);
+    opacity: 0;
+  }
 }
 
 #play_button {
@@ -116,10 +140,13 @@ dialog + .backdrop {
   padding: 0.2rem;
   font-size: 1.2rem;
   border-radius: 6px;
+  color: #fff;
 }
 #register-btn {
 }
 #tweet-btn {
+  background-color: #00acee;
+  border: 2px solid #017bac;
 }
 
 .cut {

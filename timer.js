@@ -26,12 +26,13 @@ function zeroPadding(num) {
 // タイマー
 const timer = setInterval('countUp()', 1000)
 const justTime = new Date('2021-1-1 0:00:00').getTime() //1609426800000 // 0時0分
-const subtraction = 80000 // 後で変える
+const subtraction = 3000 // 後で変える
 const funmae = new Date(justTime - subtraction)
 let displayTime = funmae
 const shouldStartTime = justTime - haiTime
 let startTime = null
-let sa = 100000 // 初期値を0点ソウルにするため
+let sa = 0
+const timerArea = document.getElementById("timer")
 
 function countUp() {
   // スタートが遅かったときに、ウルトラソウルを待たずにループするので
@@ -41,11 +42,16 @@ function countUp() {
   } else {
     displayTime = new Date(displayTime.getTime() + 1000)
   }
+  if(displayTime.getTime() == justTime) {
+    timerArea.setAttribute("class", "tosikosi")
+  } else {
+    timerArea.setAttribute("class", "timer")
+  }
   showTime(displayTime)
 }
 
 function showTime(time) {
-  document.getElementById("timer").innerHTML = formatDate(time)
+  timerArea.innerHTML = formatDate(time)
 }
 
 function resetDisplayTime() {
@@ -274,7 +280,9 @@ function point() {
 
 function message() {
   if (diff() > 10000) {
-    return '<div class="msg-3">魂を感じません</div>'
+    return '<div class="msg-3">魂を感じません。ソウルを名乗らないでください。</div>'
+  } else if (diff() > 7000) {
+    return '<div class="msg-3">しょぼしょぼソウルですね</div>'
   } else if (diff() > 5000) {
     return '<div class="msg-3">ミニマムソウルですね</div>'
   } else if (diff() > 1000) {
@@ -294,7 +302,7 @@ tweetBtn.addEventListener('click', function () {
 })
 
 function tweetMessage() {
-  return `${point()}点のソウルでした。`
+  return `${myRank()}位：${point()}点のソウルでした。`
 }
 
 function tweetUrl() {
