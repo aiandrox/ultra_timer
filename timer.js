@@ -163,7 +163,7 @@ closeDialogBtn.addEventListener('click', function() {
 let myId = ""
 const users = []
 var firebaseConfig = {
-  apiKey: "AIzaSyCKNkqGrjSJ5afWXea1Ss669zVEjucjKRk",
+  apiKey: "AIzaSyCy27GcYoJt4cF1gJDqnikONSFDnt6m1iw",
   authDomain: "ultra-timer.firebaseapp.com",
   projectId: "ultra-timer",
   storageBucket: "ultra-timer.appspot.com",
