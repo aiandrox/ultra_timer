@@ -133,6 +133,7 @@ function finishMovie() {
   hide(movieArea)
   haiArea.classList.remove('cut')
   haiArea.classList.add('hide')
+  show(resultArea)
 }
 
 // 表示非表示関数
@@ -329,6 +330,24 @@ function soul() {
   }
 }
 
+function pageUrl() {
+  let name = ""
+  if (diff() > 10000) {
+    name = 'no'
+  } else if (diff() > 7000) {
+    name = 'syobo'
+  } else if (diff() > 5000) {
+    name = 'minimum'
+  } else if (diff() > 1000) {
+    name = 'hodo'
+  } else if (diff() > 200) {
+    name = 'super'
+  } else {
+    name = 'ultra'
+  }
+  return `${url}${name}.html`
+}
+
 function tweetMessage() {
   let rank = 0
   if(myRank() <= 3) {
@@ -340,5 +359,5 @@ function tweetMessage() {
 }
 
 function tweetUrl() {
-  return `https://twitter.com/intent/tweet?text=${tweetMessage()}&url=${url}&hashtags=ultra_timer,ｳﾙﾄﾗｿｳｯﾊｧｲを練習するアプリ`
+  return `https://twitter.com/intent/tweet?text=${tweetMessage()}&url=${pageUrl()}&hashtags=ultra_timer,ｳﾙﾄﾗｿｳｯﾊｧｲを練習するアプリ`
 }
