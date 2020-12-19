@@ -1,5 +1,5 @@
 'use strict'
 
 window.onload = () => {
-  location.href = '/'
+  location.href = 'https://aiandrox.github.io/ultra_timer/'
 }
