@@ -17,6 +17,21 @@ button {
   cursor: pointer;
 }
 
+table {
+  width: 100%;
+}
+table,
+th,
+td {
+  border-collapse: collapse;
+  /* border: 1px solid #ccc; */
+  line-height: 1.5;
+  padding: 0.2rem;
+}
+.name {
+  width: 60%;
+}
+
 .ultra {
   color: #ffeb75;
   font-size: 1.2em;
@@ -51,6 +66,7 @@ button {
 }
 
 #hai_area {
+  padding-top: 2rem;
   position: absolute;
   top: 30%;
   z-index: 2;
@@ -77,10 +93,10 @@ button {
 }
 
 dialog {
-  width: 100%;
+  width: 95%;
   max-width: 500px;
   padding: 1rem;
-  margin: 0.5rem;
+  margin: 20px 0.5rem;
   border: 0;
   border-radius: 6px;
   box-shadow: 0 0 1em black;

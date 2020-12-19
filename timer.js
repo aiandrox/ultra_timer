@@ -119,6 +119,8 @@ function showUltraSoul() {
 }
 
 // firebase
+let myId = ""
+const users = []
 var firebaseConfig = {
   apiKey: "AIzaSyCKNkqGrjSJ5afWXea1Ss669zVEjucjKRk",
   authDomain: "ultra-timer.firebaseapp.com",
@@ -136,38 +138,50 @@ document.addEventListener('DOMContentLoaded', () => {
   const db = firebase.firestore();
   const usersRef = db.collection("users").orderBy("point", "desc")
 
-  const users = []
   usersRef.get().then(async function(snapshot){
     await snapshot.forEach(function(doc) {
       const user = doc.data()
-      users.push({name: user.name, point: user.point })
+      users.push({id: doc.id, name: user.name, point: user.point })
     })
     renderRanking()
   })
 
   function renderRanking() {
-    rankingList.textContent = null
+    // rankingList.textContent = null
+    const tableRef = document.getElementById("targetTable")
+    tableRef.textContent = null
     users.slice(0, 20).forEach(function(user, index) {
-      const html = `<p>${index+1}位　${user.name}　${user.point}点</p>`
-      rankingList.insertAdjacentHTML('beforeend', html);
+      const newRow   = tableRef.insertRow(index)
+      const rankCell  = newRow.insertCell(0)
+      const rank  = document.createTextNode(`${index+1}位`)
+      rankCell.appendChild(rank)
+      const nameCell  = newRow.insertCell(1)
+      nameCell.setAttribute("class", "name")
+      const name  = document.createTextNode(user.name)
+      nameCell.appendChild(name)
+      const pointCell  = newRow.insertCell(2)
+      const point  = document.createTextNode(`${user.point}点`)
+      pointCell.appendChild(point)
     })
   }
 
   // 登録
-  registerBtn.addEventListener('click', function () {
+  registerBtn.addEventListener('click', async function () {
     const name = nameForm.value
     if (name == "") {
       return
     }
-    db.collection('users').add({
+    const doc = await db.collection('users').add({
       name: name,
       point: point(),
       created_at: new Date()
     })
-    addUsers({ name: name, point: point() })
+    myId = doc.id
+    addUsers({ id: doc.id, name: name, point: point() })
     nameForm.value = ""
     hide(modalFooter)
     show(tweetArea)
+    modalHeader.insertAdjacentHTML('beforeend', `順位は${myRank()}位です。`);
   })
 
   function addUsers(userData) {
@@ -180,6 +194,14 @@ document.addEventListener('DOMContentLoaded', () => {
     renderRanking()
   }
 })
+
+function myRank() {
+  if(myId == "") return null
+  const myIndex = users.findIndex(function(user) {
+    return user.id == myId
+  })
+  return myIndex + 1
+}
 
 playButton.addEventListener('click', function () {
   player.playVideo() // onPlayerStateChangeに飛ぶ
@@ -203,7 +225,9 @@ function onPlayerStateChange(event) {
 
 function alert() {
   const alertElement = document.getElementById("alert")
-  alertElement.showModal()
+  show(alertElement)
+  dialog.showModal()
+  hide(rankingList)
   setTimeout(function() {
     document.location.reload()
   }, 5000)
@@ -215,6 +239,7 @@ function startCount() {
   console.log(displaySa())
   console.log(point())
   started = true
+  modalHeader.textContent = ""
   modalHeader.insertAdjacentHTML('beforeend', `あなたのソウルは<span>${point()}点</span>です。${displaySa()}のズレでした。`);
 }
 
@@ -224,37 +249,37 @@ function setStartTime(time) {
 }
 
 function diff() {
-  return Math.abs(sa) / 10
+  return Math.abs(sa)
 }
 
 function displaySa() {
-  const m = parseInt(diff()/100/60)%60;// /100はミリ秒を秒にしている
-  const s = parseInt(diff()/100)%60;
-  const ms = parseInt(diff())%100;
-  const displayMs = zeroPadding(ms);
+  const m = parseInt(diff()/1000/60)%60;// /100はミリ秒を秒にしている
+  const s = parseInt(diff()/1000)%60;
+  const ms = parseInt(diff())%1000;
+  const displayMs = zeroPadding(ms/10);
   return `${m}分${s}秒${displayMs}`
 }
 
 function point() {
-  if (diff() > 1000) {
+  if (diff() > 10000) {
     return 0
-  } else if (diff() > 500) {
-    return 50 - diff()/50
-  } else if (diff() > 100) {
-    return 90 - diff()/40
+  } else if (diff() > 5000) {
+    return 50 - diff()/500
+  } else if (diff() > 1000) {
+    return 90 - diff()/400
   } else {
-    return 100 - diff()/10
+    return 100 - diff()/100
   }
 }
 
 function message() {
-  if (diff() > 1000) {
+  if (diff() > 10000) {
     return '<div class="msg-3">魂を感じません</div>'
-  } else if (diff() > 500) {
+  } else if (diff() > 5000) {
     return '<div class="msg-3">ミニマムソウルですね</div>'
-  } else if (diff() > 100) {
+  } else if (diff() > 1000) {
     return '<div class="msg-3">ほどほどソウルですね</div>'
-  } else if (diff() > 10) {
+  } else if (diff() > 100) {
     return '<div class="msg-2">スーパーソウルといったところかな</div>'
   } else {
     return '<div class="msg-1">お前が、お前こそがウルトラソウルだ</div>'
