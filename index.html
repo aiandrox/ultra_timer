@@ -16,14 +16,8 @@
   </div>
   <div id="wrapper">
     <dialog>
-      <div id="ranking-area" style="display: none;">
-        <h3 id="modal-header"></h3>
-        <footer id="modal-footer">
-          <input type="text" id="name" class="btn"></input>
-          <button id="register-btn" class="btn" type="button">記録を登録する</button>
-        </footer>
-      </div>
       <div id="tweet-area" style="display: none;">
+        <div id="ranking-msg"></div>
         <button id="tweet-btn" class="btn" type="button">記録をツイートする</button>
       </div>
       <div id="rankingList">
@@ -49,6 +43,15 @@
       </div>
       <button type="button" id="play_button">再生する</button>
       <div id="movie_area" style="display: none;">
+        <div id="player"></div>
+        <span class="sp-hide">〜</span>稲葉さんと松本さんを眺めながら、<br class="sp">この一年に思いを馳せましょう<span class="sp-hide">〜</span>
+      </div>
+      <div id="result-area" style="display: none;">
+        <h3 id="result"></h3>
+        <div id="register-area">
+          <input type="text" id="name" class="btn"></input>
+          <button id="register-btn" class="btn" type="button">記録を登録する</button>
+        </div>
       </div>
     </div>
   </div>

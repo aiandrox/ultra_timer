@@ -25,7 +25,8 @@ function zeroPadding(num) {
 // タイマー
 const timer = setInterval('countUp()', 1000)
 const justTime = new Date('2021-1-1 0:00:00').getTime() //1609426800000 // 0時0分
-const subtraction = 18000 // 後で変える
+const subtraction = 80000
+// const subtraction = 220000
 const funmae = new Date(justTime - subtraction)
 let displayTime = funmae
 const shouldStartTime = justTime - haiTime
@@ -61,6 +62,17 @@ function stopTimer(){
   clearInterval(timer);
 }
 
+const dialog = document.querySelector('dialog');
+const closeDialogBtn = document.getElementById("close-dialog-btn")
+const result = document.getElementById("result")
+const registerArea = document.getElementById("register-area")
+const descZone = document.getElementById('desc')
+const playButton = document.getElementById('play_button')
+const movieArea = document.getElementById("movie_area")
+const haiArea = document.getElementById("hai_area")
+const rankBtn = document.getElementById('rank-btn')
+const registerBtn = document.getElementById("register-btn")
+
 // IFrame Player API の読み込み
 const tag = document.createElement('script')
 tag.src = "https://www.youtube.com/iframe_api"
@@ -70,7 +82,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
 // YouTubeの埋め込み
 let player = ""
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('movie_area', {
+  player = new YT.Player('player', {
     width: 640, // プレーヤーの幅
     height: 390, // プレーヤーの高さ
     videoId: ultraId, // YouTubeのID
@@ -86,6 +98,34 @@ function onYouTubeIframeAPIReady() {
   })
 }
 
+playButton.addEventListener('click', function () {
+  player.playVideo() // onPlayerStateChangeに飛ぶ
+})
+
+var started = false
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING && !started) {
+    show(movieArea)
+    hide(desc)
+    hide(playButton)
+    startCount()
+  } else if (event.data == YT.PlayerState.ENDED) {
+    finishMovie()
+  } else if (event.data == YT.PlayerState.PAUSED) {
+    alert("動画を止めましたね！！\nもう一度最初からです！！")
+    document.location.reload()
+  }
+}
+
+function finishMovie() {
+  const resultArea = document.getElementById("result-area")
+  started = false
+
+  hide(movieArea)
+  haiArea.classList.add('hide');
+  show(resultArea)
+}
+
 // 表示非表示関数
 function hide(element) {
   element.style.display = 'none'
@@ -94,20 +134,6 @@ function hide(element) {
 function show(element) {
   element.style.display = 'block'
 }
-
-const dialog = document.querySelector('dialog');
-const closeDialogBtn = document.getElementById("close-dialog-btn")
-const modalHeader = document.getElementById("modal-header")
-const modalFooter = document.getElementById("modal-footer")
-const descZone = document.getElementById('desc')
-const playButton = document.getElementById('play_button')
-const haiArea = document.getElementById("hai_area")
-const rankBtn = document.getElementById('rank-btn')
-const rankingArea = document.getElementById("ranking-area")
-const rankingList = document.getElementById("rankingList")
-const tweetArea = document.getElementById("tweet-area")
-const registerBtn = document.getElementById("register-btn")
-const nameForm = document.getElementById("name")
 
 rankBtn.addEventListener('click', function() {
   dialog.showModal();
@@ -121,12 +147,10 @@ closeDialogBtn.addEventListener('click', function() {
   dialog.close();
 })
 
-
 function showUltraSoul() {
   stopTimer()
   show(haiArea)
   haiArea.classList.remove("hide")
-  show(rankingArea)
 }
 
 // firebase
@@ -158,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   function renderRanking() {
-    // rankingList.textContent = null
     const tableRef = document.getElementById("targetTable")
     tableRef.textContent = null
     users.slice(0, 20).forEach(function(user, index) {
@@ -178,7 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 登録
   registerBtn.addEventListener('click', async function () {
+    const nameForm = document.getElementById("name")
     const name = nameForm.value
+    const tweetArea = document.getElementById("tweet-area")
+    const rankingMsg = document.getElementById("ranking-msg")
+
     if (name == "") {
       return
     }
@@ -190,9 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
     myId = doc.id
     addUsers({ id: doc.id, name: name, point: point() })
     nameForm.value = ""
-    hide(modalFooter)
+    dialog.showModal()
+    hide(registerArea)
     show(tweetArea)
-    modalHeader.insertAdjacentHTML('beforeend', `順位は${myRank()}位です。`);
+    rankingMsg.textContent = `順位は${myRank()}位です。`
   })
 
   function addUsers(userData) {
@@ -214,37 +242,14 @@ function myRank() {
   return myIndex + 1
 }
 
-playButton.addEventListener('click', function () {
-  player.playVideo() // onPlayerStateChangeに飛ぶ
-})
-
-var started = false
-function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING && !started) {
-    show(document.getElementById("movie_area"))
-    hide(desc)
-    hide(playButton)
-    startCount()
-  } else if (event.data == YT.PlayerState.ENDED) {
-    hide(document.getElementById("movie_area"))
-    show(desc)
-    show(playButton)
-    started = false
-    haiArea.classList.add('hide');
-  } else if (event.data == YT.PlayerState.PAUSED) {
-    alert("動画を止めましたね！！\nもう一度最初からです！！")
-    document.location.reload()
-  }
-}
-
 function startCount() {
   setStartTime(displayTime)
   setTimeout(showUltraSoul, haiTime)
   console.log(displaySa())
   console.log(point())
   started = true
-  modalHeader.textContent = ""
-  modalHeader.insertAdjacentHTML('beforeend', `あなたのソウルは<span>${point()}点</span>です。${displaySa()}のズレでした。`);
+  result.textContent = ""
+  result.insertAdjacentHTML('beforeend', `あなたのソウルは<span>${point()}点</span>です。${displaySa()}のズレでした。`);
 }
 
 function setStartTime(time) {

@@ -38,7 +38,7 @@ td {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding-top: 3rem;
+  padding: 3rem 0;
 }
 
 #main {
@@ -97,7 +97,7 @@ td {
   border-bottom: 2px solid #7c0021;
 }
 
-#movie_area {
+#player {
   width: 100%;
 }
 
@@ -129,12 +129,6 @@ td {
   }
 }
 
-.ultra-1 {
-  color: #ffeb75;
-}
-.ultra-2 {
-}
-
 dialog {
   width: 95%;
   max-width: 500px;
@@ -159,15 +153,16 @@ dialog + .backdrop {
   padding: 0.2rem;
   font-size: 1.2rem;
   border-radius: 6px;
+  border: 2px solid #fff;
 }
 #register-btn {
-  background-color: #ff7f35;
-  border: 2px solid #c95410;
+  background-color: #da5a10;
+  border: 2px solid #da5a10;
   color: #fff;
 }
 #tweet-btn {
   background-color: #00acee;
-  border: 2px solid #017bac;
+  border: 2px solid #00acee;
   color: #fff;
 }
 
@@ -185,9 +180,16 @@ dialog + .backdrop {
   }
 }
 
+.sp-hide {
+  display: none;
+}
+
 @media screen and (min-width: 768px) {
   .sp {
     display: none;
+  }
+  .sp-hide {
+    display: inline;
   }
   .btn {
     width: 48%;
