@@ -164,14 +164,14 @@ closeDialogBtn.addEventListener('click', function() {
 let myId = ""
 const users = []
 var firebaseConfig = {
-  apiKey: "AIzaSyCy27GcYoJt4cF1gJDqnikONSFDnt6m1iw",
-  authDomain: "ultra-timer.firebaseapp.com",
-  projectId: "ultra-timer",
-  storageBucket: "ultra-timer.appspot.com",
-  messagingSenderId: "238377844617",
-  appId: "1:238377844617:web:5b2873548f118c0cd76b58",
-  measurementId: "G-JMEFKVYET8"
-}
+  apiKey: "AIzaSyD36bUpddhzC3zyaN2C6_CwS_6F6OK1PrY",
+  authDomain: "ultra-timer-af9ca.firebaseapp.com",
+  projectId: "ultra-timer-af9ca",
+  storageBucket: "ultra-timer-af9ca.appspot.com",
+  messagingSenderId: "747803517653",
+  appId: "1:747803517653:web:690d9ff5688022419bf85c",
+  measurementId: "G-681KDP968G"
+};
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 firebase.analytics()
