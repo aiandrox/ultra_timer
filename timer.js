@@ -332,17 +332,17 @@ function soul() {
 function pageUrl() {
   let name = ""
   if (diff() > 10000) {
-    name = 'no'
+    name = '0_no'
   } else if (diff() > 7000) {
-    name = 'syobo'
+    name = '1_syobo'
   } else if (diff() > 5000) {
-    name = 'minimum'
+    name = '2_minimum'
   } else if (diff() > 1000) {
-    name = 'hodo'
+    name = '3_hodo'
   } else if (diff() > 200) {
-    name = 'super'
+    name = '4_super'
   } else {
-    name = 'ultra'
+    name = '5_ultra'
   }
   return `${url}${name}.html`
 }
