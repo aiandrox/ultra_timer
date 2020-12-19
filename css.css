@@ -79,6 +79,11 @@ td {
   margin-bottom: 2rem;
 }
 
+#tweet-area {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
 #play_button {
   font-size: 1.8rem;
   padding: 0.2rem;
@@ -112,14 +117,13 @@ td {
   color: #03506f;
   text-align: center;
   pointer-events: none;
-}
-#hai_area.hide {
-  animation: fadeOut 0.5s linear 0s;
-  animation-fill-mode: forwards;
-}
-.hai {
   font-size: 5rem;
   font-weight: bold;
+}
+.hide {
+  animation: fadeOut 0.5s linear 0s;
+  animation-fill-mode: forwards;
+  display: none;
 }
 @keyframes fadeOut {
   0% {

@@ -115,18 +115,24 @@ function onPlayerStateChange(event) {
   } else if (event.data == YT.PlayerState.ENDED) {
     finishMovie()
   } else if (event.data == YT.PlayerState.PAUSED) {
-    alert("動画を止めましたね！！\nもう一度最初からです！！")
+    alert("動画を操作しましたね！！\nもう一度最初からです！！")
     document.location.reload()
   }
 }
 
+function showUltraSoul() {
+  stopTimer()
+  show(haiArea)
+  haiArea.classList.remove("hide")
+}
+
 function finishMovie() {
-  const resultArea = document.getElementById("result-area")
   started = false
+  const resultArea = document.getElementById("result-area")
 
   hide(movieArea)
+  haiArea.classList.remove('cut')
   haiArea.classList.add('hide')
-  show(resultArea)
 }
 
 // 表示非表示関数
@@ -152,12 +158,6 @@ dialog.addEventListener('click', (event) => {
 closeDialogBtn.addEventListener('click', function() {
   dialog.close()
 })
-
-function showUltraSoul() {
-  stopTimer()
-  show(haiArea)
-  haiArea.classList.remove("hide")
-}
 
 // firebase
 let myId = ""
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dialog.showModal()
     hide(registerArea)
     show(tweetArea)
-    rankingMsg.textContent = `あなたの順位は${myRank()}位です。`
+    rankingMsg.textContent = `【あなたの順位は${myRank()}位でした】`
   })
 
   function addUsers(userData) {
@@ -253,7 +253,7 @@ function startCount() {
   setTimeout(showUltraSoul, haiTime)
   started = true
   result.textContent = ""
-  const html = `あなたのソウルは<span class="ultra">${point()}点</span>です。<span class="ultra">${displaySa()}</span>のズレでした。<br>${message()}`
+  const html = `あなたのソウルは<span class="ultra">${point()}点</span>です。ズレは<span class="ultra">${displaySa()}</span>でした。<br>${message()}`
   result.innerHTML = html
 }
 
@@ -275,15 +275,19 @@ function displaySa() {
 }
 
 function point() {
-  if (diff() > 10000) {
-    return 0
-  } else if (diff() > 5000) {
-    return 50 - diff()/500
-  } else if (diff() > 1000) {
-    return 90 - diff()/400
+  let p = 0
+  if (diff() >= 10000) {
+    p =  0
+  } else if (diff() >= 5000) { // 5000~10000
+    p = (166 - diff()/60) / 2 // 0.33~41.33
+  } else if (diff() >= 1000) { // 1000~5000
+    p = 100 - diff()/85 + 2 // 43.17~90.23
+  } else if (diff() >= 200) { // 200~1000
+    p = 100 - diff()/100 + 1 // 91~99
   } else {
-    return 100 - diff()/100
+    p = 100
   }
+  return Math.round(p*100)/100 // 四捨五入
 }
 
 function message() {
@@ -295,7 +299,7 @@ function message() {
     return 'ミニマムソウルですね。'
   } else if (diff() > 1000) {
     return 'ほどほどソウルですね。'
-  } else if (diff() > 100) {
+  } else if (diff() > 200) {
     return 'スーパーソウルといったところかな。'
   } else {
     return 'お前が、お前こそがウルトラソウルだ！！！'
@@ -318,7 +322,7 @@ function soul() {
     return 'ミニマムソウルでした。'
   } else if (diff() > 1000) {
     return 'ほどほどソウルでした。'
-  } else if (diff() > 100) {
+  } else if (diff() > 200) {
     return 'スーパーソウルでした！'
   } else {
     return '完璧なウルトラソウルでした！！'

@@ -11,19 +11,17 @@
 </head>
 
 <body>
-  <div id="hai_area" class="cut" style="display: none;">
-    <div class="hai">＼ﾊｧｲ／</div>
-  </div>
+  <div id="hai_area" class="cut" style="display: none;">＼ﾊｧｲ／</div>
   <div id="wrapper">
     <dialog>
-      <div id="tweet-area" style="display: none;">
-        <div id="ranking-msg"></div>
-        <button id="tweet-btn" class="btn" type="button">記録をツイートする</button>
-      </div>
       <div id="rankingList">
         <h2>ランキング</h2>
         <table id="targetTable">
         </table>
+      </div>
+      <div id="tweet-area" style="display: none;">
+        <div id="ranking-msg"></div>
+        <button id="tweet-btn" class="btn" type="button">記録をツイートする</button>
       </div>
       <button class="sp" id="close-dialog-btn">閉じる</button>
     </dialog>
@@ -45,11 +43,12 @@
       </div>
       <div id="result-area" style="display: none;">
         <div id="result"></div>
+        <button type="button" class="rank-btn btn">ランキングを表示</button>
         <div id="register-area">
-          <button type="button" class="rank-btn btn">ランキングを表示</button>
           <br><br>
-          <input type="text" id="name" class="btn"></input>
+          <input type="text" id="name" class="btn" placeholder="名前"></input>
           <button id="register-btn" class="btn" type="button">記録を登録する</button>
+          記録を登録すると結果をツイートできます。
         </div>
       </div>
     </div>
