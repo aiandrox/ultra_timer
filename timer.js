@@ -6,11 +6,12 @@ const ultraId = 'Ujb-ZeX7Mo8'
 
 window.onload = () => {
   showTime(displayTime)
+  setInterval('countUp()', 100)
 }
 
 const formatDate = (date) => {
   const y = date.getFullYear()
-  const m = zeroPadding(date.getMonth() + 1);
+  const m = zeroPadding(date.getMonth() + 1)
   const h = zeroPadding(date.getHours())
   const d = zeroPadding(date.getDate())
   const min = zeroPadding(date.getMinutes())
@@ -19,12 +20,12 @@ const formatDate = (date) => {
 }
 
 function zeroPadding(num) {
-  return num.toString().padStart(2, '0');
+  return num.toString().padStart(2, '0')
 }
 
 // タイマー
-const timer = setInterval('countUp()', 1000)
-const justTime = new Date('2021-1-1 0:00:00').getTime() //1609426800000 // 0時0分
+const timer = setInterval('timerUp()', 10)
+const justTime = new Date('2021-1-1 0:00:00').getTime() //1609426800000
 const subtraction = 80000
 // const subtraction = 220000
 const funmae = new Date(justTime - subtraction)
@@ -34,15 +35,17 @@ let startTime = null
 let sa = 0
 const timerArea = document.getElementById("timer")
 
-function countUp() {
-  // スタートが遅かったときに、ウルトラソウルを待たずにループするので
-  const resetTime = new Date(justTime + sa + 10000)
-  if (displayTime >= resetTime) {
+function timerUp() {
+  const resetTime = new Date(justTime + sa + 11000)
+  if (resetTime < displayTime) {
     resetDisplayTime()
   } else {
-    displayTime = new Date(displayTime.getTime() + 1000)
+    displayTime = new Date(displayTime.getTime() + 10)
   }
-  if(displayTime.getTime() == justTime) {
+}
+
+function countUp() {
+  if(justTime <= displayTime.getTime() && displayTime.getTime() < justTime + 1000) {
     timerArea.setAttribute("class", "tosikosi")
   } else {
     timerArea.setAttribute("class", "timer")
@@ -59,10 +62,10 @@ function resetDisplayTime() {
 }
 
 function stopTimer(){
-  clearInterval(timer);
+  clearInterval(timer)
 }
 
-const dialog = document.querySelector('dialog');
+const dialog = document.querySelector('dialog')
 const closeDialogBtn = document.getElementById("close-dialog-btn")
 const result = document.getElementById("result")
 const registerArea = document.getElementById("register-area")
@@ -70,7 +73,7 @@ const descZone = document.getElementById('desc')
 const playButton = document.getElementById('play_button')
 const movieArea = document.getElementById("movie_area")
 const haiArea = document.getElementById("hai_area")
-const rankBtn = document.getElementById('rank-btn')
+const rankBtns = document.querySelectorAll('.rank-btn')
 const registerBtn = document.getElementById("register-btn")
 
 // IFrame Player API の読み込み
@@ -122,7 +125,7 @@ function finishMovie() {
   started = false
 
   hide(movieArea)
-  haiArea.classList.add('hide');
+  haiArea.classList.add('hide')
   show(resultArea)
 }
 
@@ -135,16 +138,19 @@ function show(element) {
   element.style.display = 'block'
 }
 
-rankBtn.addEventListener('click', function() {
-  dialog.showModal();
+rankBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    dialog.showModal()
+  })
 })
+
 dialog.addEventListener('click', (event) => {
   if (event.target === dialog) {
-    dialog.close('cancelled');
+    dialog.close('cancelled')
   }
 })
 closeDialogBtn.addEventListener('click', function() {
-  dialog.close();
+  dialog.close()
 })
 
 function showUltraSoul() {
@@ -164,13 +170,13 @@ var firebaseConfig = {
   messagingSenderId: "238377844617",
   appId: "1:238377844617:web:5b2873548f118c0cd76b58",
   measurementId: "G-JMEFKVYET8"
-};
+}
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+firebase.initializeApp(firebaseConfig)
+firebase.analytics()
 
 document.addEventListener('DOMContentLoaded', () => {
-  const db = firebase.firestore();
+  const db = firebase.firestore()
   const usersRef = db.collection("users").orderBy("point", "desc")
 
   usersRef.get().then(async function(snapshot){
@@ -220,16 +226,16 @@ document.addEventListener('DOMContentLoaded', () => {
     dialog.showModal()
     hide(registerArea)
     show(tweetArea)
-    rankingMsg.textContent = `順位は${myRank()}位です。`
+    rankingMsg.textContent = `あなたの順位は${myRank()}位です。`
   })
 
   function addUsers(userData) {
     users.push(userData)
     users.sort(function(a,b) {
-      if(a.point > b.point) return -1;
-      if(a.point < b.point) return 1;
-      return 0;
-    });
+      if(a.point > b.point) return -1
+      if(a.point < b.point) return 1
+      return 0
+    })
     renderRanking()
   }
 })
@@ -245,11 +251,10 @@ function myRank() {
 function startCount() {
   setStartTime(displayTime)
   setTimeout(showUltraSoul, haiTime)
-  console.log(displaySa())
-  console.log(point())
   started = true
   result.textContent = ""
-  result.insertAdjacentHTML('beforeend', `あなたのソウルは<span>${point()}点</span>です。${displaySa()}のズレでした。`);
+  const html = `あなたのソウルは<span class="ultra">${point()}点</span>です。<span class="ultra">${displaySa()}</span>のズレでした。<br>${message()}`
+  result.innerHTML = html
 }
 
 function setStartTime(time) {
@@ -262,10 +267,10 @@ function diff() {
 }
 
 function displaySa() {
-  const m = parseInt(diff()/1000/60)%60;// /100はミリ秒を秒にしている
-  const s = parseInt(diff()/1000)%60;
-  const ms = parseInt(diff())%1000;
-  const displayMs = zeroPadding(ms/10);
+  const m = parseInt(diff()/1000/60)%60 // /100はミリ秒を秒にしている
+  const s = parseInt(diff()/1000)%60
+  const ms = parseInt(diff())%1000
+  const displayMs = zeroPadding(ms/10)
   return `${m}分${s}秒${displayMs}`
 }
 
@@ -283,17 +288,17 @@ function point() {
 
 function message() {
   if (diff() > 10000) {
-    return '<div class="msg-3">魂を感じません。ソウルを名乗らないでください。</div>'
+    return '魂を感じません。ソウルを名乗らないでください。'
   } else if (diff() > 7000) {
-    return '<div class="msg-3">しょぼしょぼソウルですね</div>'
+    return 'しょぼしょぼソウルですね。'
   } else if (diff() > 5000) {
-    return '<div class="msg-3">ミニマムソウルですね</div>'
+    return 'ミニマムソウルですね。'
   } else if (diff() > 1000) {
-    return '<div class="msg-3">ほどほどソウルですね</div>'
+    return 'ほどほどソウルですね。'
   } else if (diff() > 100) {
-    return '<div class="msg-2">スーパーソウルといったところかな</div>'
+    return 'スーパーソウルといったところかな。'
   } else {
-    return '<div class="msg-1">お前が、お前こそがウルトラソウルだ</div>'
+    return 'お前が、お前こそがウルトラソウルだ！！！'
   }
 }
 
@@ -301,11 +306,33 @@ function message() {
 const tweetBtn = document.getElementById("tweet-btn")
 
 tweetBtn.addEventListener('click', function () {
-  window.open(tweetUrl(), '_blank');
+  window.open(tweetUrl(), '_blank')
 })
 
+function soul() {
+  if (diff() > 10000) {
+    return '残念ながら魂はありませんでした。'
+  } else if (diff() > 7000) {
+    return 'しょぼしょぼソウルでした。'
+  } else if (diff() > 5000) {
+    return 'ミニマムソウルでした。'
+  } else if (diff() > 1000) {
+    return 'ほどほどソウルでした。'
+  } else if (diff() > 100) {
+    return 'スーパーソウルでした！'
+  } else {
+    return '完璧なウルトラソウルでした！！'
+  }
+}
+
 function tweetMessage() {
-  return `${myRank()}位：${point()}点のソウルでした。`
+  let rank = 0
+  if(myRank() <= 3) {
+    rank = `暫定${myRank()}位！！！`
+  } else {
+    rank = `${myRank()}位でした！`
+  }
+  return `${point()}点で${rank}\n${soul()}`
 }
 
 function tweetUrl() {

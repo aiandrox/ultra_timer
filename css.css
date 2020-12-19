@@ -85,6 +85,7 @@ td {
   width: 200px;
   color: #fff;
   background-color: #c00033;
+  border: 0;
   border-bottom: 5px solid #7c0021;
   -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
@@ -107,9 +108,10 @@ td {
   bottom: 30%;
   z-index: 2;
   width: 100%;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.7);
   color: #03506f;
   text-align: center;
+  pointer-events: none;
 }
 #hai_area.hide {
   animation: fadeOut 0.5s linear 0s;
@@ -127,6 +129,10 @@ td {
     opacity: 0;
     display: none;
   }
+}
+
+#result {
+  margin-bottom: 2rem;
 }
 
 dialog {
