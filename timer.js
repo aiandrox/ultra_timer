@@ -26,7 +26,7 @@ function zeroPadding(num) {
 // タイマー
 const timer = setInterval('timerUp()', 10)
 const justTime = new Date('2021-1-1 0:00:00').getTime() //1609426800000
-const subtraction = 180000
+const subtraction = 120000
 const funmae = new Date(justTime - subtraction)
 let displayTime = funmae
 const shouldStartTime = justTime - haiTime
