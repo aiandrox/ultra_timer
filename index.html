@@ -14,43 +14,42 @@
   <div id="hai_area" class="cut" style="display: none;">
     <div class="hai">＼ﾊｧｲ／</div>
   </div>
-  <dialog>
-    <div id="ranking-area" style="display: none;">
-      <h3 id="modal-header"></h3>
-      <footer id="modal-footer">
-        <input type="text" id="name" class="btn"></input>
-        <button id="register-btn" class="btn" type="button">記録を登録する</button>
-      </footer>
-    </div>
-    <div id="tweet-area" style="display: none;">
-      <button id="tweet-btn" class="btn" type="button">記録をツイートする</button>
-    </div>
-    <div id="rankingList">
-      <h3>ランキング</h3>
-      <table id="targetTable">
-      </table>
-    </div>
-    <div id="alert" style="display: none;">
-      <h3>止めましたね！！！</h3>
-      <p>残念ですが、もう一度最初からです！！！</p>
-      <p>5秒後に更新します。</p>
-    </div>
-  </dialog>
-  <div id="main">
-    <h1>年越しの<br class="br-sp"><span class="ultra">ｳﾙﾄﾗｿｳｯ ＼ﾊｧｲ／</span><br class="br-sp">を<br>練習するアプリ</h1>
-    <div id="timer"></div>
+  <div id="wrapper">
+    <dialog>
+      <div id="ranking-area" style="display: none;">
+        <h3 id="modal-header"></h3>
+        <footer id="modal-footer">
+          <input type="text" id="name" class="btn"></input>
+          <button id="register-btn" class="btn" type="button">記録を登録する</button>
+        </footer>
+      </div>
+      <div id="tweet-area" style="display: none;">
+        <button id="tweet-btn" class="btn" type="button">記録をツイートする</button>
+      </div>
+      <div id="rankingList">
+        <h3>ランキング</h3>
+        <table id="targetTable">
+        </table>
+      </div>
+      <button class="sp" id="close-dialog-btn">閉じる</button>
+    </dialog>
+    <div>
+    <div id="main">
+      <h1>年越しの<br class="sp"><span class="ultra">ｳﾙﾄﾗｿｳｯ ＼ﾊｧｲ／</span><br class="sp">を<br>練習するアプリ</h1>
+      <div id="timer" class="timer"></div>
 
-    <div id="desc">
-      <div>
-        <h2>ルール説明</h2>
-        1月1日0時0分に<span class="ultra">ｳﾙﾄﾗｿｳｯ ＼ﾊｧｲ／</span>を<br class="br-sp">成功させたら<br>あなたはウルトラソウル。
+      <div id="desc">
+        <div>
+          <h2>ルール説明</h2>
+          <p>1月1日0時0分に<span class="ultra">ｳﾙﾄﾗｿｳｯ ＼ﾊｧｲ／</span>を<br class="sp">成功させたら<br>あなたはウルトラソウル。</p>
+        </div>
+        <div>
+          <button type="button" id="rank-btn">ランキングを表示</button>
+        </div>
       </div>
       <button type="button" id="play_button">再生する</button>
-    </div>
-    <div id="movie_area" style="display: none;">
-    </div>
-    <div>
-      <button type="button" id="rank-btn">ランキングを表示</button>
+      <div id="movie_area" style="display: none;">
+      </div>
     </div>
   </div>
 

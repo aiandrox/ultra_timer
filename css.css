@@ -1,15 +1,10 @@
 body {
-  padding-top: 3rem;
   color: #fff;
   background-color: #03506f;
   font-family: "Sawarabi Mincho", serif;
 }
 
 h1 {
-  margin-bottom: 2rem;
-}
-
-div {
   margin-bottom: 2rem;
 }
 
@@ -39,10 +34,14 @@ td {
   padding: 0 4px;
 }
 
-#main {
+#wrapper {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  padding-top: 3rem;
+}
+
+#main {
   text-align: center;
 }
 
@@ -52,13 +51,13 @@ td {
   animation-iteration-count: infinite;
 }
 .timer {
-  color: #000;
+  color: #01151d;
 }
 #timer {
   font-size: 2.4rem;
   text-shadow: 0 0 0.3em #fff, 0 0 0.5em #fff, 0 0 0.5em #fff;
+  margin-bottom: 2rem;
 }
-
 @keyframes pulsate {
   0% {
     transform: scale(1, 1);
@@ -76,6 +75,10 @@ td {
   }
 }
 
+#desc {
+  margin-bottom: 2rem;
+}
+
 #play_button {
   font-size: 1.8rem;
   padding: 0.2rem;
@@ -88,26 +91,42 @@ td {
   border-radius: 6px;
   font-family: "Sawarabi Mincho";
 }
+#play_button:hover {
+  margin-top: 3px;
+  color: #fff;
+  border-bottom: 2px solid #7c0021;
+}
+
+#movie_area {
+  width: 100%;
+}
 
 #hai_area {
-  padding-top: 2rem;
+  padding: 2rem 0;
   position: absolute;
-  top: 30%;
+  bottom: 30%;
   z-index: 2;
   width: 100%;
   background-color: #fff;
   color: #03506f;
   text-align: center;
 }
+#hai_area.hide {
+  animation: fadeOut 0.5s linear 0s;
+  animation-fill-mode: forwards;
+}
 .hai {
   font-size: 5rem;
   font-weight: bold;
 }
-
-#play_button:hover {
-  margin-top: 3px;
-  color: #fff;
-  border-bottom: 2px solid #7c0021;
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
 }
 
 .ultra-1 {
@@ -123,9 +142,9 @@ dialog {
   margin: 20px 0.5rem;
   border: 0;
   border-radius: 6px;
-  box-shadow: 0 0 1em black;
+  box-shadow: 0 0 1em #01151d;
+  color: #01151d;
 }
-
 dialog::backdrop {
   /* 背景を半透明のブラックにする */
   background-color: rgba(0, 0, 0, 0.4);
@@ -140,21 +159,24 @@ dialog + .backdrop {
   padding: 0.2rem;
   font-size: 1.2rem;
   border-radius: 6px;
-  color: #fff;
 }
 #register-btn {
+  background-color: #ff7f35;
+  border: 2px solid #c95410;
+  color: #fff;
 }
 #tweet-btn {
   background-color: #00acee;
   border: 2px solid #017bac;
+  color: #fff;
 }
 
 .cut {
-  animation: SlideIn 0.7s;
+  animation: slideIn 0.7s;
 }
-@keyframes SlideIn {
+@keyframes slideIn {
   0% {
-    opacity: 0; /*初期状態では透明に*/
+    opacity: 0;
     transform: translateX(100%);
   }
   100% {
@@ -164,7 +186,7 @@ dialog + .backdrop {
 }
 
 @media screen and (min-width: 768px) {
-  .br-sp {
+  .sp {
     display: none;
   }
   .btn {

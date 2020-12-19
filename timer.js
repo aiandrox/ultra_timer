@@ -1,7 +1,6 @@
 'use strict'
 
 const url = 'https://aiandrox.github.io/ultra_timer/'
-// const haiTime = 67120
 const haiTime = 66700
 const ultraId = 'Ujb-ZeX7Mo8'
 
@@ -16,7 +15,7 @@ const formatDate = (date) => {
   const d = zeroPadding(date.getDate())
   const min = zeroPadding(date.getMinutes())
   const s = zeroPadding(date.getSeconds())
-  return `${y}年${m}月${d}日 <br class="br-sp">${h}時${min}分${s}秒`
+  return `${y}年${m}月${d}日 <br class="sp">${h}時${min}分${s}秒`
 }
 
 function zeroPadding(num) {
@@ -26,7 +25,7 @@ function zeroPadding(num) {
 // タイマー
 const timer = setInterval('countUp()', 1000)
 const justTime = new Date('2021-1-1 0:00:00').getTime() //1609426800000 // 0時0分
-const subtraction = 3000 // 後で変える
+const subtraction = 18000 // 後で変える
 const funmae = new Date(justTime - subtraction)
 let displayTime = funmae
 const shouldStartTime = justTime - haiTime
@@ -97,6 +96,7 @@ function show(element) {
 }
 
 const dialog = document.querySelector('dialog');
+const closeDialogBtn = document.getElementById("close-dialog-btn")
 const modalHeader = document.getElementById("modal-header")
 const modalFooter = document.getElementById("modal-footer")
 const descZone = document.getElementById('desc')
@@ -117,10 +117,15 @@ dialog.addEventListener('click', (event) => {
     dialog.close('cancelled');
   }
 })
+closeDialogBtn.addEventListener('click', function() {
+  dialog.close();
+})
+
 
 function showUltraSoul() {
   stopTimer()
   show(haiArea)
+  haiArea.classList.remove("hide")
   show(rankingArea)
 }
 
@@ -218,25 +223,18 @@ function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING && !started) {
     show(document.getElementById("movie_area"))
     hide(desc)
+    hide(playButton)
     startCount()
   } else if (event.data == YT.PlayerState.ENDED) {
     hide(document.getElementById("movie_area"))
     show(desc)
+    show(playButton)
     started = false
-    hide(haiArea)
+    haiArea.classList.add('hide');
   } else if (event.data == YT.PlayerState.PAUSED) {
-    alert()
-  }
-}
-
-function alert() {
-  const alertElement = document.getElementById("alert")
-  show(alertElement)
-  dialog.showModal()
-  hide(rankingList)
-  setTimeout(function() {
+    alert("動画を止めましたね！！\nもう一度最初からです！！")
     document.location.reload()
-  }, 5000)
+  }
 }
 
 function startCount() {
